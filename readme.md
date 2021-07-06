@@ -30,6 +30,10 @@ To use custom shaders you will need to add the appropriate loader to the `bundle
     }
 ```
 
+## Bend shader
+from http://wholcman.github.io/bend-modifier-3d/
+
+
 ### Vegetation animation code
 From [Chapter 16. Vegetation Procedural Animation and Shading in Crysis](https://developer.nvidia.com/gpugems/gpugems3/part-iii-rendering/chapter-16-vegetation-procedural-animation-and-shading-crysis)
 
