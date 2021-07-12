@@ -210,7 +210,8 @@ smallWavesFolder.open()
 
 // Geometry
 const particlesLeavesGeometry = new THREE.BufferGeometry()
-let leavesCount = { value: 10}
+
+const leavesCount = { value: 10}
 
 // 1 dimensional array where positions are
 // [x,y,z,x,y,z,...,x,y,z]
@@ -255,44 +256,8 @@ leavesParticleFolder.add(leafParticles1.position, 'x', -4, 4, 0.01).name('Leaf P
 leavesParticleFolder.add(leafParticles1.position, 'y', -4, 4, 0.01).name('Leaf Particles Y')
 leavesParticleFolder.add(leafParticles1.position, 'z', -4, 4, 0.01).name('Leaf Particles Z')
 // leavesParticleFolder.add(leavesCount, 'value').min(0).max(100).step(1).name('Leaf Quantity')
-//     .onChange(() =>
-//         {
-//             leavesCount.value.set(leavesCount.value)
-//         })
+//     .onChange(redraw)
 
-
-/**
- * Model
- */
-gltfLoader.load(
-    'japanese_garden5.glb',
-    (gltf) =>
-    {
-        const bakedMesh = gltf.scene.children.find( (child) => child.name === 'japaneseGarden' )
-        const poleLightMesh1 = gltf.scene.children.find( (child) => child.name === 'lantermsEmission' )
-        const portalLightMesh = gltf.scene.children.find( (child) => child.name === 'portalEmission' )
-        const waterMesh = gltf.scene.children.find( (child) => child.name === 'water' )
-        const leavesMesh1 = gltf.scene.children.find( (child) => child.name === 'leaves1' )
-        const leavesMesh2 = gltf.scene.children.find( (child) => child.name === 'leaves2' )
-        // const bakedMesh = gltf.scene.children.find( (child) => child.name === 'portalMerged' )
-        // const poleLightMesh1 = gltf.scene.children.find( (child) => child.name === 'poleLightEmission1' )
-        // const poleLightMesh2 = gltf.scene.children.find( (child) => child.name === 'poleLightEmission2' )
-        // const portalLightMesh = gltf.scene.children.find( (child) => child.name === 'portalLightEmission' )
-
-        bakedMesh.material = bakedMaterial
-        poleLightMesh1.material = poleLightMaterial
-        // poleLightMesh2.material = poleLightMaterial
-        portalLightMesh.material = portalLightMaterial
-
-        waterMesh.material = waterMaterial
-
-        leavesMesh1.material = leaves1Material
-        leavesMesh2.material = leaves2Material
-        
-        scene.add(gltf.scene)
-        
-    }
-)
 
 
 /**
@@ -339,6 +304,41 @@ fireflyFolder.open()
 // Points
 const fireflies = new THREE.Points(firefliesGeometry, firefliesMaterial)
 scene.add(fireflies)
+
+
+/**
+ * Model
+ */
+ gltfLoader.load(
+    'japanese_garden5.glb',
+    (gltf) =>
+    {
+        const bakedMesh = gltf.scene.children.find( (child) => child.name === 'japaneseGarden' )
+        const poleLightMesh1 = gltf.scene.children.find( (child) => child.name === 'lantermsEmission' )
+        const portalLightMesh = gltf.scene.children.find( (child) => child.name === 'portalEmission' )
+        const waterMesh = gltf.scene.children.find( (child) => child.name === 'water' )
+        const leavesMesh1 = gltf.scene.children.find( (child) => child.name === 'leaves1' )
+        const leavesMesh2 = gltf.scene.children.find( (child) => child.name === 'leaves2' )
+        // const bakedMesh = gltf.scene.children.find( (child) => child.name === 'portalMerged' )
+        // const poleLightMesh1 = gltf.scene.children.find( (child) => child.name === 'poleLightEmission1' )
+        // const poleLightMesh2 = gltf.scene.children.find( (child) => child.name === 'poleLightEmission2' )
+        // const portalLightMesh = gltf.scene.children.find( (child) => child.name === 'portalLightEmission' )
+
+        bakedMesh.material = bakedMaterial
+        poleLightMesh1.material = poleLightMaterial
+        // poleLightMesh2.material = poleLightMaterial
+        portalLightMesh.material = portalLightMaterial
+
+        waterMesh.material = waterMaterial
+
+        leavesMesh1.material = leaves1Material
+        leavesMesh2.material = leaves2Material
+        
+        scene.add(gltf.scene)
+        
+    }
+)
+
 
 
 
