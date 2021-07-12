@@ -84,27 +84,6 @@ const leaves1Material = new THREE.ShaderMaterial({
     fragmentShader: leavesFragmentShader
 })
 
-// leaves1Material.onBeforeCompile = (shader) => {
-
-//     shader.uniforms.uTime = customUniforms.uTime
-
-//     shader.vertexShader = shader.vertexShader.replace(
-//         '#include <common>', 
-//         `  
-//             #include <common>
-
-//         `
-//         )
-//     shader.vertexShader = shader.vertexShader.replace(
-//         '#include <begin_vertex>', 
-//         `  
-//             #include <begin_vertex>
-
-//         `
-//         )
-    
-// }
-
 const leaves2Material = new THREE.ShaderMaterial({ 
     uniforms: {
         uTime: { value: 0 },
@@ -225,7 +204,61 @@ smallWavesFolder.add(waterMaterial.uniforms.uSmallWavesIterations, 'value').min(
 smallWavesFolder.open()
 
 
+/**
+ * Particles
+ */
 
+// Geometry
+const particlesLeavesGeometry = new THREE.BufferGeometry()
+let leavesCount = { value: 10}
+
+// 1 dimensional array where positions are
+// [x,y,z,x,y,z,...,x,y,z]
+const leafPositions = new Float32Array(leavesCount.value * 3) // 3 represents x,y and z
+
+for(let i = 0; i < leavesCount.value * 3; i++)
+{
+    leafPositions[i] = (Math.random() - 0.5) * 2
+}
+
+particlesLeavesGeometry.setAttribute(
+    'position', new THREE.BufferAttribute(leafPositions, 3) // assign x,y,z
+)
+
+// Textures
+const leafTexture = new THREE.TextureLoader().load('./sakura_petal1_offset.png')
+// Materials
+const particlesLeavesMaterial = new THREE.PointsMaterial({
+    color: 0xd002fa,
+    map: leafTexture,
+    size: 0.5,
+    sizeAttenuation: true,
+    transparent: true,
+    alphaMap: leafTexture,
+    // alphaTest: 0.001
+    // depthTest: false
+    depthWrite: false
+})
+
+// Points
+
+const leafParticles1 = new THREE.Points(particlesLeavesGeometry, particlesLeavesMaterial);
+leafParticles1.position.set(-2.52,2.11,4)
+scene.add(leafParticles1)
+
+const leafParticles2 = new THREE.Points(particlesLeavesGeometry, particlesLeavesMaterial);
+leafParticles2.position.set(-3.42,2.11,-2)
+scene.add(leafParticles2)
+
+const leavesParticleFolder = gui.addFolder("Leaf Particles")
+leavesParticleFolder.add(leafParticles1.position, 'x', -4, 4, 0.01).name('Leaf Particles X')
+leavesParticleFolder.add(leafParticles1.position, 'y', -4, 4, 0.01).name('Leaf Particles Y')
+leavesParticleFolder.add(leafParticles1.position, 'z', -4, 4, 0.01).name('Leaf Particles Z')
+// leavesParticleFolder.add(leavesCount, 'value').min(0).max(100).step(1).name('Leaf Quantity')
+//     .onChange(() =>
+//         {
+//             leavesCount.value.set(leavesCount.value)
+//         })
 
 
 /**
@@ -367,6 +400,8 @@ renderer.outputEncoding = THREE.sRGBEncoding;
  * Animate
  */
 const clock = new THREE.Clock()
+let delta = 0
+const speed = .002
 
 const tick = () =>
 {
@@ -379,7 +414,22 @@ const tick = () =>
     leaves1Material.uniforms.uTime.value = elapsedTime
     leaves2Material.uniforms.uTime.value = elapsedTime
 
-    // customUniforms.uTime.value = elapsedTime
+    // delta = clock.getDelta()
+    // console.log(delta)
+
+    // leaf particles
+    for (let i = 0; i < leavesCount.value; i++) {
+        const i3 = i * 3
+
+        particlesLeavesGeometry.attributes.position.array[i3 + 0] += speed // x
+        particlesLeavesGeometry.attributes.position.array[i3 + 1] += - speed // y
+
+        if (particlesLeavesGeometry.attributes.position.array[i3 + 1] < - 2) {
+            particlesLeavesGeometry.attributes.position.array[i3 + 0] = (Math.random() - 0.5) * -2.65
+            particlesLeavesGeometry.attributes.position.array[i3 + 1] = (Math.random() - 0.5) * 2
+        }
+    }
+    particlesLeavesGeometry.attributes.position.needsUpdate = true
 
     // Update controls
     controls.update()
