@@ -1,8 +1,13 @@
 # Japanese Garden using Three.js
-Inspired by a recent trip to Chicago's Japanese Garden. Modeled in 3DS Max. UV Mapping and Texture Baking in Blender, then exported to GLTF. Custom Vertex and Fragment GLSL shaders for the water, portal, ad fireflies. Based off from Bruno Simon's [Three.js Journey course](https://threejs-journey.xyz/).
+Inspired by a recent trip to Chicago's Japanese Garden. Modeled in 3DS Max. UV Mapping and Texture Baking in Blender, then exported to GLTF. Custom Vertex and Fragment GLSL shaders for the water, portal, and fireflies. Based off from Bruno Simon's [Three.js Journey course](https://threejs-journey.xyz/).
 
-Screenshot
+Screenshot <br />
 ![Japanese Garden](./japanese_garden.gif)
+
+Baked Texture map done using Blender <br />
+![Texture map](./baked_japanese_garden.jpg)
+
+
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
