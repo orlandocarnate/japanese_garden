@@ -21,6 +21,7 @@
     "portfinder-sync": "0.0.2",
     "raw-loader": "^4.0.2",
     "spectorjs": "^0.9.25",
+    "stats.js": "^0.17.0",
     "style-loader": "^2.0.0",
     "three": "^0.129.0",
     "webpack": "^5.39.0",

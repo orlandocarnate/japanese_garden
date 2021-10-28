@@ -12,6 +12,7 @@ import waterVertexShader from './shaders/water/vertex.glsl'
 import waterFragmentShader from './shaders/water/fragment.glsl'
 import leavesVertexShader from './shaders/leaves/vertex.glsl'
 import leavesFragmentShader from './shaders/leaves/fragment.glsl'
+import Stats from 'stats.js'
 
 // console.log(portalVertexShader)
 // console.log(portalFragmentShader)
@@ -397,6 +398,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.outputEncoding = THREE.sRGBEncoding;
 
 /**
+ * Stats
+ */
+const stats = new Stats();
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild(stats.dom);
+
+/**
  * Animate
  */
 const clock = new THREE.Clock()
@@ -405,6 +413,8 @@ const speed = .002
 
 const tick = () =>
 {
+    stats.begin()
+
     const elapsedTime = clock.getElapsedTime()
 
     // Update materials
@@ -439,6 +449,8 @@ const tick = () =>
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
+
+    stats.end()
 }
 
 tick()
